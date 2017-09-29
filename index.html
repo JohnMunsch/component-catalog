@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gentium+Basic:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />  
+  </head>
+  <body>
+    <a href="./component-catalog.html">Component Catalog</a>
+    <a href="./index.html">Peity</a>
+    netcomix
+
+    <h1>Peity</h1>
+    
+    <p>The <a href="http://benpickles.github.io/peity/">Peity</a> mini graph library reimplented
+    using <a href="https://d3js.org/">D3.js</a> and a variety of different libraries. At the 
+    moment it has a significant portion completed using 
+    <a href="https://www.webcomponents.org/">Web Components</a> and <a href="https://www.polymer-project.org/">Polymer</a> but
+    AngularJS, React, and Vue will be added.</p>
+    
+    <h2>Interactive Example</h2>
+    <gr-pie class="interactive">0.5,1,2</gr-pie>
+    
+    <button onclick="changeProperties()">Change Properties</button>
+    
+    <h2>Pie Charts</h2>
+    <div>
+      <gr-pie>1/5</gr-pie>
+      <gr-pie>226/360</gr-pie>
+      <gr-pie>0.52/1.561</gr-pie>
+      <gr-pie>1,4</gr-pie>
+      <gr-pie>226,134</gr-pie>
+      <gr-pie>0.52,1.041</gr-pie>
+      <gr-pie>1,2,3,2,2</gr-pie>
+    </div>
+    
+    <h2>Donut Charts</h2>
+    <div>
+      <gr-donut>1/5</gr-donut>
+      <gr-donut>226/360</gr-donut>
+      <gr-donut>0.52/1.561</gr-donut>
+      <gr-donut>1,4</gr-donut>
+      <gr-donut>226,134</gr-donut>
+      <gr-donut>0.52,1.041</gr-donut>
+      <gr-donut>1,2,3,2,2</gr-donut>
+    </div>
+    
+    <h2>Line Charts</h2>
+    <div>
+      <gr-line>5,3,9,6,5,9,7,3,5,2</gr-line>
+      <gr-line>5,3,2,-1,-3,-2,2,3,5,2</gr-line>
+      <gr-line>0,-3,-6,-4,-5,-4,-7,-3,-5,-2</gr-line>
+    </div>
+
+    <h2>Bar Charts</h2>
+    <div>
+      <gr-bar>5,3,9,6,5,9,7,3,5,2</gr-bar>
+      <gr-bar>5,3,2,-1,-3,-2,2,3,5,2</gr-bar>
+      <gr-bar>0,-3,-6,-4,-5,-4,-7,-3,-5,-2</gr-bar>
+    </div>
+    
+    <h2>Attributes</h2>
+    <div>
+      <gr-donut fill='["red", "#eeeeee"]' inner-radius="10" radius="40">1/7</gr-donut>
+      <gr-donut fill='["orange", "#eeeeee"]' inner-radius="14" radius="36">2/7</gr-donut>
+      <gr-donut fill='["yellow", "#eeeeee"]' inner-radius="16" radius="32">3/7</gr-donut>
+      <gr-donut fill='["green", "#eeeeee"]' inner-radius="18" radius="28">4/7</gr-donut>
+      <gr-donut fill='["blue", "#eeeeee"]' inner-radius="20" radius="24">5/7</gr-donut>
+      <gr-donut fill='["indigo", "#eeeeee"]' inner-radius="18" radius="20">6/7</gr-donut>
+      <gr-donut fill='["violet", "#eeeeee"]' inner-radius="15" radius="16">7/7</gr-donut>
+    </div>
+    
+    <!-- Web Components polyfill -->
+    <script src="./bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+    <!-- Libraries -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    
+    <!-- Implementations -->
+    <!-- Web Components -->
+    <!-- script src="./implementations/web-components.js"></script -->
+
+    <!-- Polymer -->
+    <link rel="import" href="bower_components/polymer/polymer-element.html">
+    <link rel="import" href="./implementations/web-components-plus-polymer.html">
+
+    <!-- Including these two because I sometimes compare side-by-side with Piety graphs. -->
+    <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script -->
+    <!-- script src="jquery.piety.min.js"></script -->
+  </body>
+</html>

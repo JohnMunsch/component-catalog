@@ -1,0 +1,22 @@
+{
+  "name": "Component Catalog",
+  "authors": [
+    "John Munsch <john.munsch@aptitude.com>"
+  ],
+  "description": "A set of test scenarios and sample components to build with multiple different technologies.",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^2.0.0",
+    "webcomponentsjs": "^1.0.14"
+  }
+}

@@ -1,0 +1,275 @@
+<dom-module>
+  <script>
+    class BaseElement extends Polymer.Element {
+      connectedCallback() {
+        super.connectedCallback();
+
+        this.data = this._parseData(this.innerText);
+      }
+
+      _parseData(value) {
+        // Process the data to get an array of numbers. There may be two items 
+        // or many.
+        let temp = value.split(this.delimiter).map(val => parseFloat(val, 10));
+        
+        // If that didn't result in multiple values, parse again using /
+        // as our delimiter and expect only two values.
+        if (temp.length === 1) {
+          temp = value.split('/');
+          
+          // Create an array with two values. For example, if our two values were
+          // "1/7", then we create an array with [ 1/7, 6/7 ]. That gives us two
+          // data parts which make up a very simple pie or donut chart.
+          if (temp.length === 2) {
+            this.data = [ temp[0] / temp[1], (temp[1] - temp[0]) / temp[1] ];
+          }
+        } else {
+          this.data = temp;
+        }
+      }
+    }
+
+    class PieElement extends BaseElement {
+      static get properties () {
+        return {
+          'data': {
+            type: Array,
+            value: () => []
+          },
+          'delimiter': {
+            type: String,
+            value: ','
+          },
+          'fill': {
+            type: Array,
+            value: () => ['#ff9900', '#fff4dd', "#ffd592"],
+            reflectToAttribute: true
+          },
+          'height': {
+            type: Number
+          },
+          'innerRadius': {
+            type: Number,
+            value: 0
+          },
+          'radius': {
+            type: Number,
+            value: 8
+          },
+          'width': {
+            type: Number
+          }
+        };
+      }
+
+      static get observers() {
+        return [
+          '_render(data, fill, height, innerRadius, radius, width)'
+        ]
+      }
+
+      _render (newValue, oldValue) {
+        if (this.data && this.data.length) {
+          let height = this.height !== undefined ? this.height : this.radius * 2;
+          let width = this.width !== undefined ? this.width : this.radius * 2;
+          
+          this.innerHTML = `<svg width="${width}" height="${height}"></svg>`;
+          
+          let svg = d3.select(this).select('svg'),
+            g = svg.append('g').attr('transform', `translate(${this.radius},${this.radius})`);
+      
+          var pie = d3.pie().sort(null);
+      
+          var path = d3.arc()
+              .outerRadius(this.radius)
+              .innerRadius(this.innerRadius);
+      
+          let data = this.data;
+      
+          var color = d3.scaleLinear().domain([0, data.length - 1])
+                        .range(this.fill);
+      
+          // Selects all the arcs in the graph and syncs them up with
+          // the data for the various slices.
+          var arc = g.selectAll('.arc')
+            .data(pie(data))
+            .enter().append('g')
+            .attr('class', 'arc');
+      
+          arc.append('path')
+              .attr('d', path)
+              .attr('fill', function(d) { return color(d.index); });
+        }
+      }
+    }
+
+    class DonutElement extends PieElement {
+      static get properties () {
+        return Object.assign({}, PieElement.properties, {
+          innerRadius: {
+            type: Number,
+            value: 4
+          }
+        });
+      }
+    }
+
+    class LineElement extends BaseElement {
+      static get properties () {
+        return {
+          'data': {
+            type: Array,
+            value: () => []
+          },
+          'delimiter': {
+            type: String,
+            value: ','
+          },
+          'fill': {
+            type: Array,
+            value: () => [ '#c6d9fd' ]
+          },
+          'height': {
+            type: Number,
+            value: 16
+          },
+          'max': {
+            type: Number
+          },
+          'min': {
+            type: Number,
+            value: 0
+          },
+          'stroke': {
+            type: String,
+            value: "#4d89f9"
+          },
+          'strokeWidth': {
+            type: Number,
+            value: 1
+          },
+          'width': {
+            type: Number,
+            value: 32
+          }
+        };
+      }
+      
+      static get observers() {
+        return [
+          '_render(data, fill, height, max, min, stroke, strokeWidth, width)'
+        ]
+      }
+
+      _render () {
+        if (this.data && this.data.length) {
+          this.innerHTML = `<svg width="${this.width}" height="${this.height}"></svg>`;
+
+          d3.select(this).select('svg');
+
+          // this.innerHTML = `<svg class="peity" height="16" width="32">
+          //                     <polygon fill="#c6d9fd" points="0 15.5 0 7.166666666666666 3.5555555555555554 10.5 7.111111111111111 0.5 10.666666666666666 5.5 14.222222222222221 7.166666666666666 17.77777777777778 0.5 21.333333333333332 3.833333333333334 24.888888888888886 10.5 28.444444444444443 7.166666666666666 32 12.166666666666668 32 15.5"></polygon>
+          //                     <polyline fill="none" points="0 7.166666666666666 3.5555555555555554 10.5 7.111111111111111 0.5 10.666666666666666 5.5 14.222222222222221 7.166666666666666 17.77777777777778 0.5 21.333333333333332 3.833333333333334 24.888888888888886 10.5 28.444444444444443 7.166666666666666 32 12.166666666666668" stroke="#4d89f9" stroke-width="1" stroke-linecap="square"></polyline>
+          //                   </svg>`;
+        }
+      }
+    }
+
+    class BarElement extends BaseElement {
+      static get properties () {
+        return {
+          'data': {
+            type: Array,
+            value: () => []
+          },
+          'delimiter': {
+            type: String,
+            value: ','
+          },
+          'fill': {
+            type: Array,
+            value: () => [ "#4d89f9" ]
+          },
+          'height': {
+            type: Number,
+            value: 16
+          },
+          'max': {
+            type: Number
+          },
+          'min': {
+            type: Number,
+            value: 0
+          },
+          'padding': {
+            type: Number,
+            value: 0.1
+          },
+          'width': {
+            type: Number,
+            value: 32
+          }
+        };
+      }
+
+      static get observers() {
+        return [
+          '_render(data, fill, height, max, min, padding, width)'
+        ]
+      }
+
+      _render () {
+        if (this.data && this.data.length) {
+          this.innerHTML = `<svg width="${this.width}" height="${this.height}"></svg>`;
+
+          // Based upon the number of data points and the padding between bars,
+          // calculate bar width.
+          let barWidth = (this.width - ((this.data.length - 1) * 0.7)) / this.data.length;
+
+          var x = d3.scaleLinear()
+                    .domain([0, this.data.length - 1])
+                    .range([0, (this.data.length - 1) * (barWidth + 0.7)]);
+
+          var y = d3.scaleLinear()
+                    .domain([Math.min(this.min, d3.min(this.data)), d3.max(this.data)])
+                    .range([this.height, 0]);
+
+          // This chart draws from the y-axis upwards for positive values and from the
+          // y-axis downwards for negative values.
+          d3.select(this).select('svg')
+            .selectAll('rect')
+            .data(this.data)
+            .enter()
+            .append('rect')
+            .attr('fill', this.fill[0])
+            .attr('x', (d, i) => x(i))
+            .attr('y', (d) => d < 0 ? y(0) : y(d))
+            .attr('width', barWidth)
+            .attr('height', (d) => d < 0 ? y(d) - y(0) : y(0) - y(d));
+        }
+      }
+    }
+
+    // Register all of the custom elements for which we created classes.
+    customElements.define('gr-pie', PieElement);
+    customElements.define('gr-donut', DonutElement);
+    customElements.define('gr-line', LineElement);
+    customElements.define('gr-bar', BarElement);
+
+    // This is just an example where I alter properties of the graph via JavaScript
+    // and it is automatically redrawn.
+    function changeProperties () {
+      let interactiveGraph = document.querySelector('gr-pie.interactive');
+      
+      interactiveGraph.data = [ 1/7, 6/7 ];
+      interactiveGraph.fill = [ "red", "black", "blue" ];
+      interactiveGraph.radius = 100;
+    }
+
+    window.addEventListener('WebComponentsReady', function(e) {
+      // This is just testing the function the WebComponents polyfill provides. It
+      // gets called at the same point whether it polyfilled anything or not.
+      console.log('Components are ready');
+    });
+  </script>
+</dom-module>

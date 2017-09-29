@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Gentium+Basic:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      cc-wrap div {
+        background-color: #DD4492;
+        color: white;
+        margin: 3px;
+        padding: 1px;
+      }
+
+      .state1 {
+        font-weight: bold;
+        color: #87A96B;
+      }
+
+      .state2 {
+        font-style: italic;
+        color: #95918C;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="./component-catalog.html">Component Catalog</a>
+    <a href="./index.html">Peity</a>
+    netcomix
+
+    <h1>Component Catalog</h1>
+    
+    <h2>HTML Only</h2>
+    <cc-html-only></cc-html-only>
+    
+    <h2>HTML + CSS</h2>
+    <cc-html-css></cc-html-css>
+    
+    <h2>String Attributes</h2>
+    <cc-string-attr color="#1FCECB"></cc-string-attr>
+    
+    <h2>Code Inside</h2>
+    
+    <h2>Wrapping Inner HTML or Text</h2>
+    <cc-wrap>This is some inner text.</cc-wrap>
+    <cc-wrap><h3>This is some inner HTML</h3></cc-wrap>
+    
+    <h2>Getting HTML from an External File or Template</h2>
+    <cc-external-template></cc-external-template>
+    
+    <h2>Exposing Events</h2>
+    <p>Action One is setup to toggle the class seen below in the "Change Class 
+    or Style" section each time you press it. The second action is similar to 
+    the first except that we pass a value from inside the component to function
+    we wired up to accept the event.</p>
+    <cc-exposing-events action-one="wrapper.toggleClass()" 
+                        action-two="wrapper.changeWrapperColor(color)"></cc-exposing-events>
+    
+    <h2>Interacting With or Wrapping Another Component</h2>
+    
+    <h2>Changing as Attribute Values Change</h2>
+    
+    <h2>Change Class or Style</h2>
+    <div ng-class="wrapper.alternatingClass">
+      This should use one of two alternating classes for it's appearance. The first 
+      is bold and green, the second italic and gray.</div>
+    <div ng-style="{ color: wrapper.wrapperColor }">
+      This should appear in a color specified in the wrapping controller code.
+    </div>
+    
+    <h2>Repeating Elements</h2>
+    
+    <h2>Connecting to a Redux Model</h2>
+    
+    <h2>Modifier for an Existing HTML Element</h2>
+    <div cc-modifier=""></div>
+    
+    <h2>Unit Testing</h2>
+  </body>
+</html>

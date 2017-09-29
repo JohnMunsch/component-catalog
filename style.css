@@ -1,0 +1,8 @@
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+}
+
+h3, p {
+  font-family: 'Gentium Basic', serif;
+}
