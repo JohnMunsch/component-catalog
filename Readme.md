@@ -1,10 +1,10 @@
 ## Build out a set of tests in the Component Catalog page
 * HTML Only
-   * Component simply renders a larger block of HTML.
+** Component simply renders a larger block of HTML.
 * HTML + CSS
-   * Rendering HTML and including CSS for that HTML (via Shadow DOM, embedded <style> block, JavaScript CSS, etc.).
+** Rendering HTML and including CSS for that HTML (via Shadow DOM, embedded <style> block, JavaScript CSS, etc.).
 * String Attributes
-   * A component which utilizes the string values of attributes set in the DOM on the component.
+** A component which utilizes the string values of attributes set in the DOM on the component.
 * Boolean, Object, Array, and Other Attribute Types
    * Very similar to the previous but demonstrating dealing with attributes which will always have a specific type of value.
 * Code in the Component
