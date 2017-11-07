@@ -1,6 +1,6 @@
 <dom-module>
   <script>
-    class BaseElement extends Polymer.Element {
+    class PolymerBaseElement extends Polymer.Element {
       connectedCallback() {
         super.connectedCallback();
 
@@ -29,7 +29,7 @@
       }
     }
 
-    class PieElement extends BaseElement {
+    class PolymerPieElement extends PolymerBaseElement {
       static get properties () {
         return {
           'data': {
@@ -103,7 +103,7 @@
       }
     }
 
-    class DonutElement extends PieElement {
+    class PolymerDonutElement extends PolymerPieElement {
       static get properties () {
         return Object.assign({}, PieElement.properties, {
           innerRadius: {
@@ -114,7 +114,7 @@
       }
     }
 
-    class LineElement extends BaseElement {
+    class PolymerLineElement extends PolymerBaseElement {
       static get properties () {
         return {
           'data': {
@@ -175,7 +175,7 @@
       }
     }
 
-    class BarElement extends BaseElement {
+    class PolymerBarElement extends PolymerBaseElement {
       static get properties () {
         return {
           'data': {
@@ -251,20 +251,10 @@
     }
 
     // Register all of the custom elements for which we created classes.
-    customElements.define('gr-pie', PieElement);
-    customElements.define('gr-donut', DonutElement);
-    customElements.define('gr-line', LineElement);
-    customElements.define('gr-bar', BarElement);
-
-    // This is just an example where I alter properties of the graph via JavaScript
-    // and it is automatically redrawn.
-    function changeProperties () {
-      let interactiveGraph = document.querySelector('gr-pie.interactive');
-      
-      interactiveGraph.data = [ 1/7, 6/7 ];
-      interactiveGraph.fill = [ "red", "black", "blue" ];
-      interactiveGraph.radius = 100;
-    }
+    customElements.define('pl-pie', PolymerPieElement);
+    customElements.define('pl-donut', PolymerDonutElement);
+    customElements.define('pl-line', PolymerLineElement);
+    customElements.define('pl-bar', PolymerBarElement);
 
     window.addEventListener('WebComponentsReady', function(e) {
       // This is just testing the function the WebComponents polyfill provides. It

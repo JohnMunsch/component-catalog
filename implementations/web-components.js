@@ -66,21 +66,25 @@ class BaseElement extends HTMLElement {
   set data (newVal) {
     // Process the data to get an array of numbers. There may be two items 
     // or many.
-    let temp = newVal.split(this.delimiter).map(val => parseFloat(val, 10));
-    
-    // If that didn't result in multiple values, parse again using /
-    // as our delimiter and expect only two values.
-    if (temp.length === 1) {
-      temp = newVal.split('/');
-      
-      // Create an array with two values. For example, if our two values were
-      // "1/7", then we create an array with [ 1/7, 6/7 ]. That gives us two
-      // data parts which make up a very simple pie or donut chart.
-      if (temp.length === 2) {
-        this.options.data = [ temp[0] / temp[1], (temp[1] - temp[0]) / temp[1] ];
+    if (typeof newVal == 'string') {
+      let temp = newVal.split(this.delimiter).map(val => parseFloat(val, 10));
+
+      // If that didn't result in multiple values, parse again using /
+      // as our delimiter and expect only two values.
+      if (temp.length === 1) {
+        temp = newVal.split('/');
+        
+        // Create an array with two values. For example, if our two values were
+        // "1/7", then we create an array with [ 1/7, 6/7 ]. That gives us two
+        // data parts which make up a very simple pie or donut chart.
+        if (temp.length === 2) {
+          this.options.data = [ temp[0] / temp[1], (temp[1] - temp[0]) / temp[1] ];
+        }
+      } else {
+        this.options.data = temp;
       }
     } else {
-      this.options.data = temp;
+      this.options.data = newVal;
     }
     
     this.render();
@@ -407,20 +411,10 @@ class BarElement extends BaseElement {
 }
 
 // Register all of the custom elements for which we created classes.
-customElements.define('gr-pie', PieElement);
-customElements.define('gr-donut', DonutElement);
-customElements.define('gr-line', LineElement);
-customElements.define('gr-bar', BarElement);
-
-// This is just an example where I alter properties of the graph via JavaScript
-// and it is automatically redrawn.
-function changeProperties () {
-  let interactiveGraph = document.querySelector('gr-pie.interactive');
-  
-  interactiveGraph.data = '1/7';
-  interactiveGraph.fill = '["red", "black", "blue"]';
-  interactiveGraph.radius = 100;
-}
+customElements.define('wc-pie', PieElement);
+customElements.define('wc-donut', DonutElement);
+customElements.define('wc-line', LineElement);
+customElements.define('wc-bar', BarElement);
 
 window.addEventListener('WebComponentsReady', function(e) {
   // This is just testing the function the WebComponents polyfill provides. It
