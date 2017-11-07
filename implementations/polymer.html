@@ -7,6 +7,14 @@
         this.data = this._parseData(this.innerText);
       }
 
+      get shadowRoot() {
+        if (!this._shadowRoot) {
+          this._shadowRoot = this.attachShadow({mode: 'open'});
+        }
+
+        return this._shadowRoot;
+      }
+
       _parseData(value) {
         // Process the data to get an array of numbers. There may be two items 
         // or many.
@@ -73,9 +81,9 @@
           let height = this.height !== undefined ? this.height : this.radius * 2;
           let width = this.width !== undefined ? this.width : this.radius * 2;
           
-          this.innerHTML = `<svg width="${width}" height="${height}"></svg>`;
+          this.shadowRoot.innerHTML = `<svg width="${width}" height="${height}"></svg>`;
           
-          let svg = d3.select(this).select('svg'),
+          let svg = d3.select(this.shadowRoot).select('svg'),
             g = svg.append('g').attr('transform', `translate(${this.radius},${this.radius})`);
       
           var pie = d3.pie().sort(null);
@@ -163,9 +171,9 @@
 
       _render () {
         if (this.data && this.data.length) {
-          this.innerHTML = `<svg width="${this.width}" height="${this.height}"></svg>`;
-
-          d3.select(this).select('svg');
+          this.shadowRoot.innerHTML = `<svg width="${this.width}" height="${this.height}"></svg>`;
+          
+          d3.select(this.shadowRoot).select('svg');
 
           // this.innerHTML = `<svg class="peity" height="16" width="32">
           //                     <polygon fill="#c6d9fd" points="0 15.5 0 7.166666666666666 3.5555555555555554 10.5 7.111111111111111 0.5 10.666666666666666 5.5 14.222222222222221 7.166666666666666 17.77777777777778 0.5 21.333333333333332 3.833333333333334 24.888888888888886 10.5 28.444444444444443 7.166666666666666 32 12.166666666666668 32 15.5"></polygon>
@@ -220,8 +228,8 @@
 
       _render () {
         if (this.data && this.data.length) {
-          this.innerHTML = `<svg width="${this.width}" height="${this.height}"></svg>`;
-
+          this.shadowRoot.innerHTML = `<svg width="${this.width}" height="${this.height}"></svg>`;
+          
           // Based upon the number of data points and the padding between bars,
           // calculate bar width.
           let barWidth = (this.width - ((this.data.length - 1) * 0.7)) / this.data.length;
@@ -236,7 +244,7 @@
 
           // This chart draws from the y-axis upwards for positive values and from the
           // y-axis downwards for negative values.
-          d3.select(this).select('svg')
+          d3.select(this.shadowRoot).select('svg')
             .selectAll('rect')
             .data(this.data)
             .enter()
