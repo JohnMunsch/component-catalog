@@ -1,4 +1,15 @@
-## Build out a set of tests in the Component Catalog page
+## Installation
+
+1. Install [live-server](https://github.com/tapio/live-server) (or your favorite popup development web server).
+1. bower install
+
+## Running
+
+Run "live-server" from the root directory. It should pop open the index.html page in your default browser ready for you to look at the plain JavaScript example components and the Polymer rewrites of those same components.
+
+## The complete component catalog
+
+Eventually I want to have a complete catalog of examples, beyond the rewrite of Peity graphs which cover a really common set of component recipies. Here's the list I intend to add. Probably each one will get both plain JS and Polymer implementations.
 
 * HTML Only
   * Component simply renders a larger block of HTML.
@@ -26,4 +37,4 @@
 
 ## To Do List
 * Make the line chart work
-* Add shadow DOM to the Polymer version
+* Build out more of the basic component catalog items
